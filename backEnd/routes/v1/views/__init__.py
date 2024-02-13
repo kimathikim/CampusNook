@@ -7,4 +7,3 @@ from models import storage
 from models.student import Student
 
 from routes.v1.views.student import *
-
