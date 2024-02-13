@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Student class for the database"""
 from models.base_m import Base_m, Base
-import sqlalchemy
 from sqlalchemy import Column, String
 
 class Student(Base_m, Base):

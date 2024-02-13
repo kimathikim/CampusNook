@@ -3,7 +3,6 @@
 
 from models.base_m import Base_m, Base
 from sqlalchemy import Column, String
-import sqlalchemy
 
 
 class Landlord(Base_m, Base):

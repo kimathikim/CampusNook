@@ -1,28 +1,23 @@
 #!/usr/bin/python3
-"""Create views for the Student object - handle all the default Restful API actions."""
-import models
-import datetime
-from flask import jsonify, request, abort, url_for, redirect
+"""Create views for the landlord object - handle all the default Restful API actions."""
+from flask import jsonify, request
 from models import storage
-from models.student import Student
+from models.landlord import Landlord
 from routes.v1.views import app_views, auth
-from flask_jwt_extended import jwt_required, JWTManager, create_access_token, create_refresh_token
-
-
-jwt = JWTManager()
-app_conf = "kimathi"
+from routes.v1.views.student import jwt, app_conf
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required
 
 def authenticate(email, password):
-    students = storage.all(Student)
-    for student in students.values():
-        if student.email == email and student.password == password:
-            return student
+    landlord = storage.all(Landlord )
+    for landlord in landlord.values():
+        if landlord.email == email and landlord.password == password:
+            return landlord
 
-# Identity function
-# a create a new student
-@app_views.route('/students', methods=["GET", 'POST'], strict_slashes=False)
-def create_student():
-    """Create a new student."""
+
+# register a new landlord POST and all the returns are in JSON format
+@app_views.route('/landlords', methods=['POST'], strict_slashes=False)
+def create_landlord():
+    """Create a new landlord."""
     if not request.get_json():
         return jsonify({"error": "Not a JSON"}), 400
     if 'first_name' not in request.get_json():
@@ -43,18 +38,12 @@ def create_student():
         return jsonify({"error": "Missing zip code"}), 400
 
     data = request.get_json()
-    new_student = Student(**data)
-    new_student.save()
-    return jsonify(new_student.to_dict()), 201
+    landlord = Landlord(**data)
+    landlord.save()
+    return jsonify(landlord.to_dict()), 201
 
-@app_views.route("/", methods=["GET"], strict_slashes=False)
-def hello():
-    return jsonify({"Hello": "World"})
-
-
-
-@auth.route('/login', methods=["POST"], strict_slashes=False)
-def login():
+@auth.route('/landlord/login', methods=["POST"], strict_slashes=False)
+def landlord_login():
     """Login a user"""
     if not request.get_json():
         return jsonify({"error": "Not a JSON"}), 400
@@ -65,12 +54,12 @@ def login():
     data = request.get_json()
     email = data['email']
     password = data['password']
-    student = authenticate(email, password)
-    if student is None:
+    landlord = authenticate(email, password)
+    if landlord is None:
         return jsonify({"error": "Invalid email or password"}), 401
         # generate a token for the user and an espiry date
-    token = create_access_token(identity=student.address, expires_delta= datetime.timedelta(minutes=5))
-    refresh_token = create_refresh_token(identity = student.address,  expires_delta= datetime.timedelta(minutes=5))
+    token = create_access_token(identity=landlord.address)
+    refresh_token = create_refresh_token(identity = landlord.address)
     # redirect to the protected page
     return jsonify({"Message": "Login succesfful",
                    "token": {
@@ -78,8 +67,8 @@ def login():
                     "refresh_token": refresh_token,
                 "expires_in": 60
                 }}), 201
-# the protected page
-@app_views.route('/protected')
+
+@app_views.route('/landlord/protected')
 @jwt_required()
-def user_protected():
+def landlord_protected():
     return jsonify({"Hello": "World"})

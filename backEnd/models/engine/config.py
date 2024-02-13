@@ -4,9 +4,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
 import models
+from models.landlord import Landlord
 from models.student import Student
 from models.base_m import Base, Base_m
-classes = {"Student": Student}
+classes = {"Student": Student, "Landlord": Landlord}
 
 
 class DBStorage:
