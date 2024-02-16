@@ -3,6 +3,7 @@
 
 from models.base_m import Base_m, Base
 from sqlalchemy import Column, String
+from sqlalchemy.orm import relationship
 
 
 class Landlord(Base_m, Base):
@@ -17,6 +18,7 @@ class Landlord(Base_m, Base):
     city = Column(String(128), nullable=False)
     state = Column(String(128), nullable=False)
     zip_code = Column(String(128), nullable=False)
+    properties = relationship('Properties', backref='landlord', cascade='all, delete')
     def __init__(self, *args, **kwargs):
         """Init method for the Landlord class"""
         super().__init__(*args, **kwargs)

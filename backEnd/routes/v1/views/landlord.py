@@ -68,7 +68,7 @@ def landlord_login():
                 "expires_in": 60
                 }}), 201
 
-@app_views.route('/landlord/protected')
+@app_views.route('/landlords')
 @jwt_required()
 def landlord_protected():
     return jsonify({"Hello": "World"})

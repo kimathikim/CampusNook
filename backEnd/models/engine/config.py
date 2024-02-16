@@ -5,9 +5,14 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
 import models
 from models.landlord import Landlord
+from models.property import Properties
 from models.student import Student
+from models.state import State
+from models.cities import City
 from models.base_m import Base, Base_m
-classes = {"Student": Student, "Landlord": Landlord}
+from models.prop_images import Prop_images
+classes = {"Student": Student, "Landlord": Landlord, "Properties": Properties, "Prop_images": Prop_images
+           , "State": State, "City": City}
 
 
 class DBStorage:
@@ -66,7 +71,7 @@ class DBStorage:
         """
         result = None
         try:
-            objs = self.__session.query(models.classes[cls]).all()
+            objs = self.__session.query(classes[cls]).all()
             for obj in objs:
                 if obj.id == id:
                     result = obj
@@ -81,11 +86,19 @@ class DBStorage:
         cls_counter = 0
 
         if cls is not None:
-            objs = self.__session.query(models.classes[cls]).all()
+            objs = self.__session.query(classes[cls]).all()
             cls_counter = len(objs)
         else:
             for cls in classes:
-                objs = self.__session.query(models.classes[cls]).all()
+                objs = self.__session.query(classes[cls]).all()
                 cls_counter += len(objs)
         return cls_counter
+
+    # delete all objects in the database
+    def delete(self, obj=None):
+        """
+        Deletes an object from the database
+        """
+        if obj is not None:
+            self.__session.delete(obj)
 
