@@ -3,13 +3,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
-import models
 from models.landlord import Landlord
 from models.property import Properties
 from models.student import Student
 from models.state import State
 from models.cities import City
-from models.base_m import Base, Base_m
+from models.base_m import Base
 from models.prop_images import Prop_images
 classes = {"Student": Student, "Landlord": Landlord, "Properties": Properties, "Prop_images": Prop_images
            , "State": State, "City": City}

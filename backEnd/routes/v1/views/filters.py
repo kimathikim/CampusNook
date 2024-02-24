@@ -10,7 +10,7 @@ from routes.v1.views import app_views
 from flask_jwt_extended import jwt_required
 
 # endpoint to print ouit all the properties in the state id
-@app_views.route("/property/state/<state_id>", methods=["GET"], slash=False)
+@app_views.route("/property/state/<state_id>", methods=["GET"], strict_slashes=False)
 def property_state(state_id):
     """This function returns all the properties in a state"""
     state = storage.get("State", state_id)
@@ -21,7 +21,7 @@ def property_state(state_id):
 
 
 # endpoint to search properties by state names
-@app_views.route("/property/state", methods=["GET"], slash=False)
+@app_views.route("/property/state", methods=["GET"], strict_slashes=False)
 def property_state_name():
     """This function returns all the properties in a state"""
     state_name = request.args.get("name")
@@ -35,7 +35,7 @@ def property_state_name():
 
 
 # endpoint to print out all the properties in the city
-@app_views.route("/property/city/<city_id>", methods=["GET"], slash=False)
+@app_views.route("/property/city/<city_id>", methods=["GET"], strict_slashes=False)
 def property_city(city_id):
     """This function returns all the properties in a city"""
     city = storage.get("City", city_id)

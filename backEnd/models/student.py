@@ -1,10 +1,7 @@
-#!/usr/bin/python3
-"""Student class for the database"""
 from models.base_m import Base_m, Base
 from sqlalchemy import Column, String
 
 class Student(Base_m, Base):
-    """Student class for the database"""
     __tablename__ = 'students'
     first_name = Column(String(128), nullable=False)
     last_name = Column(String(128), nullable=False)
@@ -17,7 +14,4 @@ class Student(Base_m, Base):
     zip_code = Column(String(128), nullable=False)
 
     def __init__(self, *args, **kwargs):
-        """Init method for the Student class"""
         super().__init__(*args, **kwargs)
-
-

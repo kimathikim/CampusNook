@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python5
 """An app to register blueprints and start flask"""
 
 from flask import Flask, make_response, jsonify, request, url_for, redirect

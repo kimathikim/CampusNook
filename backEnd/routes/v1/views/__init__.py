@@ -18,4 +18,3 @@ from routes.v1.views.prop_image import *
 from routes.v1.views.city import *
 from routes.v1.views.state import *
 from routes.v1.views.filters import *
-

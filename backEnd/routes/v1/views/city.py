@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python4
 """Thid module defines the views for the cities endpoint"""
 from flask import jsonify, request, request_started
 from models import storage
